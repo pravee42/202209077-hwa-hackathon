@@ -281,12 +281,34 @@ function toggleFaq(btn) {
   if (icon) icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
 }
 
+// ---------- Story video ----------
+function initVideo() {
+  const video = document.getElementById('storyVideo');
+  if (!video) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    video.removeAttribute('autoplay');
+    video.pause();
+    return;
+  }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      });
+    }, { threshold: 0.2 });
+    io.observe(video);
+  }
+}
+
 // ---------- Init ----------
 document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
   initConfigurator();
   initTimeline();
   initReveals();
+  initVideo();
 });
 
 window.addToCart = addToCart;
