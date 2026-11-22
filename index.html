@@ -230,10 +230,29 @@
         </div>
 
         <div class="grid lg:grid-cols-2 gap-10 items-start">
-          <!-- Preview -->
-          <div class="bg-ice-cyan-50 rounded-3xl p-8 border border-ice-cyan-100 sticky top-24">
-            <img id="configImage" src="/images/4.webp" alt="TrailVault System" class="w-full rounded-2xl shadow-lg mb-6 object-cover aspect-[4/3] bg-white">
-            <div class="flex items-start justify-between">
+          <!-- Preview (image slider) -->
+          <div class="bg-ice-cyan-50 rounded-3xl p-6 border border-ice-cyan-100 sticky top-24">
+            <div class="relative rounded-2xl overflow-hidden">
+              <div id="galleryTrack" class="gallery-track flex overflow-x-auto snap-x snap-mandatory scroll-smooth">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/4.webp" alt="TrailVault System">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/3.png" alt="Puzzle Tower with treat">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/6.webp" alt="ScentKnot tension tug">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/9.webp" alt="Pawsle freeze-core dish">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/2.webp" alt="Dog solving the TrailVault Tower">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/5.webp" alt="Dog tugging the ScentKnot">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/7.webp" alt="Dog licking the Pawsle">
+                <img class="gallery-slide snap-center shrink-0 w-full aspect-[4/3] object-cover bg-white" src="/images/8.webp" alt="Pawsle components">
+              </div>
+              <button type="button" class="gallery-arrow left-3" data-gallery-prev aria-label="Previous image">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <button type="button" class="gallery-arrow right-3" data-gallery-next aria-label="Next image">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+              <div class="absolute top-3 right-3 bg-charcoal/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm"><span id="galleryIndex">1</span> / 8</div>
+            </div>
+            <div class="flex justify-center gap-2 mt-4" id="galleryDots"></div>
+            <div class="mt-5 flex items-start justify-between">
               <div>
                 <h3 class="font-bold text-charcoal text-lg">TrailVault™ 3-Hour Alone System</h3>
                 <p id="configSummary" class="text-sm text-charcoal-500 mt-1">Medium · Cloud Teal</p>
@@ -247,62 +266,30 @@
 
           <!-- Options -->
           <div class="space-y-8">
-            <!-- Dog size (slider) -->
+            <!-- Dog size -->
             <div>
               <div class="flex items-center justify-between mb-3">
                 <label class="font-semibold text-charcoal">Dog Size</label>
-                <span class="text-xs text-charcoal-400">Slide to choose</span>
+                <span class="text-xs text-charcoal-400">Sizing guide</span>
               </div>
-              <div class="flex items-center gap-2">
-                <button type="button" class="slider-arrow shrink-0" data-slider-prev="size" aria-label="Previous size">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div id="track-size" class="slider-track flex-1 flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth py-1" data-group="size">
-                  <button class="option-btn snap-start shrink-0 w-44 px-4 py-5 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal text-left font-medium transition" data-value="Small" data-label="Small">
-                    <span class="block text-base font-semibold">Small</span>
-                    <span class="block text-xs text-charcoal-400 font-normal mt-0.5">under 25 lb</span>
-                  </button>
-                  <button class="option-btn snap-start shrink-0 w-44 px-4 py-5 rounded-xl border-2 border-deep-teal bg-deep-teal/5 text-deep-teal text-left font-medium transition" data-value="Medium" data-label="Medium">
-                    <span class="block text-base font-semibold">Medium</span>
-                    <span class="block text-xs font-normal mt-0.5 opacity-70">25–60 lb</span>
-                  </button>
-                  <button class="option-btn snap-start shrink-0 w-44 px-4 py-5 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal text-left font-medium transition" data-value="Large" data-label="Large">
-                    <span class="block text-base font-semibold">Large</span>
-                    <span class="block text-xs text-charcoal-400 font-normal mt-0.5">60 lb+</span>
-                  </button>
-                </div>
-                <button type="button" class="slider-arrow shrink-0" data-slider-next="size" aria-label="Next size">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </button>
+              <div class="grid grid-cols-3 gap-3" data-group="size">
+                <button class="option-btn px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium hover:border-deep-teal/40 transition" data-value="Small" data-label="Small">Small<span class="block text-xs text-charcoal-400 font-normal">under 25 lb</span></button>
+                <button class="option-btn px-4 py-4 rounded-xl border-2 border-deep-teal bg-deep-teal/5 text-deep-teal font-medium transition" data-value="Medium" data-label="Medium">Medium<span class="block text-xs text-deep-teal/60 font-normal">25–60 lb</span></button>
+                <button class="option-btn px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium hover:border-deep-teal/40 transition" data-value="Large" data-label="Large">Large<span class="block text-xs text-charcoal-400 font-normal">60 lb+</span></button>
               </div>
-              <div class="flex justify-center gap-2 mt-3" data-dots="size"></div>
             </div>
 
-            <!-- Color (slider) -->
+            <!-- Color -->
             <div>
-              <div class="flex items-center justify-between mb-3">
-                <label class="font-semibold text-charcoal">Color</label>
-                <span class="text-xs text-charcoal-400">Slide to choose</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" class="slider-arrow shrink-0" data-slider-prev="color" aria-label="Previous color">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              <label class="font-semibold text-charcoal mb-3 block">Color</label>
+              <div class="grid grid-cols-2 gap-3" data-group="color">
+                <button class="option-btn flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-deep-teal bg-deep-teal/5 text-deep-teal font-medium transition" data-value="Cloud Teal" data-label="Cloud Teal">
+                  <span class="w-6 h-6 rounded-full bg-deep-teal border-2 border-white shadow"></span> Cloud Teal
                 </button>
-                <div id="track-color" class="slider-track flex-1 flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth py-1" data-group="color">
-                  <button class="option-btn snap-start shrink-0 w-56 flex items-center gap-3 px-4 py-5 rounded-xl border-2 border-deep-teal bg-deep-teal/5 text-deep-teal font-medium transition" data-value="Cloud Teal" data-label="Cloud Teal">
-                    <span class="w-8 h-8 rounded-full bg-deep-teal border-2 border-white shadow shrink-0"></span>
-                    <span class="text-left"><span class="block font-semibold">Cloud Teal</span><span class="block text-xs opacity-70">Cool &amp; calm</span></span>
-                  </button>
-                  <button class="option-btn snap-start shrink-0 w-56 flex items-center gap-3 px-4 py-5 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium transition" data-value="Warm Sand" data-label="Warm Sand">
-                    <span class="w-8 h-8 rounded-full bg-[#e8dcc8] border-2 border-white shadow shrink-0"></span>
-                    <span class="text-left"><span class="block font-semibold">Warm Sand</span><span class="block text-xs text-charcoal-400">Soft &amp; neutral</span></span>
-                  </button>
-                </div>
-                <button type="button" class="slider-arrow shrink-0" data-slider-next="color" aria-label="Next color">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <button class="option-btn flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium hover:border-deep-teal/40 transition" data-value="Warm Sand" data-label="Warm Sand">
+                  <span class="w-6 h-6 rounded-full bg-[#e8dcc8] border-2 border-white shadow"></span> Warm Sand
                 </button>
               </div>
-              <div class="flex justify-center gap-2 mt-3" data-dots="color"></div>
             </div>
 
             <!-- Refill pack -->

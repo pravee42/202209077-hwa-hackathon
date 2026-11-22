@@ -129,36 +129,38 @@ function setActiveOption(btn, group) {
   }
 }
 
-function initSliders() {
-  document.querySelectorAll('.slider-track').forEach(track => {
-    const group = track.getAttribute('data-group');
-    const cards = Array.from(track.querySelectorAll('.option-btn'));
-    const dotsWrap = document.querySelector(`[data-dots="${group}"]`);
+function initGallery() {
+  const track = document.getElementById('galleryTrack');
+  if (!track) return;
+  const slides = Array.from(track.querySelectorAll('.gallery-slide'));
+  const dotsWrap = document.getElementById('galleryDots');
+  const counter = document.getElementById('galleryIndex');
+  let index = 0;
 
-    if (dotsWrap) {
-      dotsWrap.innerHTML = cards.map((c, i) => `<button type="button" class="slider-dot" data-index="${i}" aria-label="Option ${i + 1}"></button>`).join('');
-      dotsWrap.querySelectorAll('.slider-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-          const i = Number(dot.dataset.index);
-          cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-          cards[i].click();
-        });
-      });
-      const activeIdx = cards.findIndex(c => c.classList.contains('border-deep-teal'));
-      dotsWrap.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('is-active', i === activeIdx));
-    }
+  function render() {
+    if (dotsWrap) dotsWrap.querySelectorAll('.gallery-dot').forEach((d, i) => d.classList.toggle('is-active', i === index));
+    if (counter) counter.textContent = index + 1;
+  }
+  function goTo(i) {
+    index = Math.max(0, Math.min(slides.length - 1, i));
+    track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
+    render();
+  }
 
-    const step = (dir) => {
-      const first = cards[0];
-      if (!first) return;
-      const gap = 12;
-      const amount = first.offsetWidth + gap;
-      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
-    };
+  if (dotsWrap) {
+    dotsWrap.innerHTML = slides.map((_, i) => `<button type="button" class="gallery-dot" data-index="${i}" aria-label="Image ${i + 1}"></button>`).join('');
+    dotsWrap.querySelectorAll('.gallery-dot').forEach(dot => dot.addEventListener('click', () => goTo(Number(dot.dataset.index))));
+  }
 
-    document.querySelectorAll(`[data-slider-prev="${group}"]`).forEach(b => b.addEventListener('click', () => step(-1)));
-    document.querySelectorAll(`[data-slider-next="${group}"]`).forEach(b => b.addEventListener('click', () => step(1)));
-  });
+  document.querySelectorAll('[data-gallery-prev]').forEach(b => b.addEventListener('click', () => goTo(index - 1)));
+  document.querySelectorAll('[data-gallery-next]').forEach(b => b.addEventListener('click', () => goTo(index + 1)));
+
+  track.addEventListener('scroll', () => {
+    const i = Math.round(track.scrollLeft / (track.clientWidth || 1));
+    if (i !== index) { index = i; render(); }
+  }, { passive: true });
+
+  render();
 }
 
 function updateConfigurator() {
@@ -345,7 +347,7 @@ function initVideo() {
 document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
   initConfigurator();
-  initSliders();
+  initGallery();
   initTimeline();
   initReveals();
   initVideo();
