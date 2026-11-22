@@ -1,7 +1,8 @@
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { join } from 'path';
+import { tmpdir } from 'os';
 
-const ORDERS_FILE = join(process.cwd(), 'orders.json');
+const ORDERS_FILE = join(process.env.VERCEL ? tmpdir() : process.cwd(), 'orders.json');
 
 function loadOrders() {
   if (!existsSync(ORDERS_FILE)) return [];
@@ -13,9 +14,13 @@ function loadOrders() {
 }
 
 function saveOrder(order) {
-  const orders = loadOrders();
-  orders.push(order);
-  writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2));
+  try {
+    const orders = loadOrders();
+    orders.push(order);
+    writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2));
+  } catch (e) {
+    console.error('Could not persist order', e.message);
+  }
 }
 
 export default function handler(req, res) {
@@ -40,6 +45,14 @@ export default function handler(req, res) {
     req.on('end', () => {
       try {
         const payload = JSON.parse(body);
+        if (!payload || !Array.isArray(payload.items) || payload.items.length === 0) {
+          res.status(400).json({ success: false, message: 'Cart is empty' });
+          return;
+        }
+        if (!payload.name || !payload.email || !payload.address) {
+          res.status(400).json({ success: false, message: 'Missing shipping details' });
+          return;
+        }
         const order = {
           id: 'TV-' + Date.now(),
           createdAt: new Date().toISOString(),

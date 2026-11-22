@@ -4,10 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrailVault™ — 3 hours alone. One system. A tired dog.</title>
+  <meta name="description" content="TrailVault is a passive 3-piece enrichment system for high-drive dogs. Brain drain, physical tug, calm wind-down — 3+ hours covered, no Wi-Fi, no batteries. $69.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] },
+          colors: {
+            'ice-cyan': { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4' },
+            'deep-teal': { DEFAULT: '#0f766e', 600: '#0d9488', 900: '#115e59' },
+            'aqua': { 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4' },
+            'charcoal': { DEFAULT: '#1e293b', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155' }
+          }
+        }
+      }
+    }
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <link rel="stylesheet" href="/styles.css">
@@ -17,256 +33,344 @@
   <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-ice-cyan-100">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2 cursor-pointer" onclick="location.href='/'">
+      <a href="/" class="flex items-center gap-2">
         <div class="w-8 h-8 rounded-full bg-deep-teal flex items-center justify-center text-white font-bold text-xs">T</div>
         <span class="font-bold text-xl tracking-tight text-charcoal">TrailVault</span>
-      </div>
+      </a>
       <div class="hidden md:flex items-center gap-8 text-sm font-medium text-charcoal-600">
-        <a href="#story" class="hover:text-deep-teal transition">The Story</a>
-        <a href="#modules" class="hover:text-deep-teal transition">The System</a>
-        <a href="#pricing" class="hover:text-deep-teal transition">Why $69</a>
-        <a href="#faq" class="hover:text-deep-teal transition">FAQ</a>
+        <a href="#problem" class="hover:text-deep-teal transition">The Problem</a>
+        <a href="#timeline" class="hover:text-deep-teal transition">The 3-Hour Arc</a>
+        <a href="#configure" class="hover:text-deep-teal transition">Build Yours</a>
+        <a href="#why69" class="hover:text-deep-teal transition">Why $69</a>
       </div>
       <div class="flex items-center gap-3">
         <button id="cartBtn" class="relative w-9 h-9 rounded-full bg-deep-teal text-white flex items-center justify-center hover:bg-deep-teal/90 transition" aria-label="Cart">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-          <span id="cartCount" class="absolute top-0 right-0 w-2 h-2 rounded-full bg-aqua-500 opacity-0 transition-opacity"></span>
+          <span id="cartCount" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-aqua-500 text-charcoal text-[10px] font-bold flex items-center justify-center opacity-0 transition-opacity">0</span>
         </button>
-        <a href="/checkout" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-charcoal text-white text-sm font-medium rounded-full hover:bg-deep-teal transition">Checkout</a>
       </div>
     </div>
   </nav>
 
   <main>
 
-    <!-- Hero -->
-    <section class="relative min-h-screen flex items-center justify-center px-6 pt-16 overflow-hidden">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_#e0f7fa_0%,_transparent_70%)] pointer-events-none"></div>
-      <div class="relative z-10 max-w-4xl text-center">
-        <span class="inline-block px-4 py-1.5 rounded-full bg-white/80 border border-ice-cyan-200 text-deep-teal text-xs font-medium uppercase tracking-wider mb-6 animate-fade-in-up">Passive enrichment · No Wi-Fi · No batteries · No screens</span>
-        <h1 class="text-5xl md:text-7xl font-bold text-charcoal leading-tight mb-6">3 hours alone.<br><span class="text-deep-teal">One system.</span><br>A tired dog.</h1>
-        <p class="text-lg md:text-xl text-charcoal-600 mb-10 max-w-2xl mx-auto">For smart, high-drive dogs who crack every toy in 5 minutes — and the owners who come home to a quiet house.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button class="flex items-center gap-2 px-8 py-4 bg-deep-teal text-white text-lg font-semibold rounded-full shadow-lg hover:bg-deep-teal/90 transition transform hover:-translate-y-1" onclick="addToCart('trailvault-system',1)">
-            Add to Cart — $69
-          </button>
-          <a href="#story" class="px-8 py-4 text-lg font-semibold text-charcoal border-2 border-charcoal rounded-full hover:bg-charcoal hover:text-white transition">Learn the story</a>
+    <!-- ============ HERO ============ -->
+    <section class="relative min-h-screen flex items-center overflow-hidden pt-16">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,_#e0f7fa_0%,_transparent_65%)] pointer-events-none"></div>
+      <div class="relative z-10 max-w-6xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
+        <div class="hero-copy">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-ice-cyan-200 text-deep-teal text-xs font-medium uppercase tracking-wider mb-6">Passive enrichment · No Wi-Fi · No batteries</span>
+          <h1 class="text-4xl md:text-6xl font-extrabold text-charcoal leading-[1.08] mb-6">It isn't mischief.<br><span class="text-deep-teal">It's three hours</span><br>with nothing to do.</h1>
+          <p class="text-lg md:text-xl text-charcoal-600 mb-8 max-w-lg">The TrailVault 3-Hour Alone System is one complete, modular enrichment set for smart, high-drive dogs — brain drain, physical tug, then calm wind-down.</p>
+          <div class="flex flex-wrap items-center gap-4 mb-6">
+            <div class="flex items-baseline gap-2">
+              <span class="text-4xl font-extrabold text-charcoal">$69</span>
+              <span class="text-charcoal-400 text-sm">one-time · complete system</span>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#configure" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-deep-teal text-white text-lg font-semibold rounded-full shadow-lg hover:bg-deep-teal/90 transition transform hover:-translate-y-0.5">Shop the System</a>
+            <a href="#timeline" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-charcoal border-2 border-charcoal rounded-full hover:bg-charcoal hover:text-white transition">See the 3-hour arc</a>
+          </div>
+        </div>
+        <div class="hero-visual relative">
+          <div class="absolute -inset-6 bg-aqua-200/30 blur-3xl rounded-full"></div>
+          <img src="/images/2.webp" alt="A high-drive dog working the TrailVault Puzzle Tower in a sunlit living room" class="relative w-full rounded-3xl shadow-2xl border border-white object-cover">
+          <div class="absolute -bottom-5 -left-4 bg-white rounded-2xl shadow-xl px-4 py-3 border border-ice-cyan-100">
+            <div class="text-xs text-charcoal-400">Covered per session</div>
+            <div class="font-extrabold text-deep-teal text-lg">3h 30m+</div>
+          </div>
         </div>
       </div>
-      <div class="absolute -bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-6xl pointer-events-none">
-        <img src="/images/4.webp" alt="TrailVault System" class="w-full max-w-md mx-auto block opacity-0 animate-[float_6s_ease-in-out_infinite]" style="animation-delay:0.5s">
-      </div>
-    </section>
-
-    <!-- Scroll indicator -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 text-charcoal-400 text-xs animate-bounce">
-      <span>Scroll to explore</span>
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-    </div>
-
-    <!-- The Problem -->
-    <section id="story" class="py-24 px-6 bg-white">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-charcoal mb-4">The quiet house problem</h2>
-          <p class="text-lg text-charcoal-600 max-w-2xl mx-auto">High-drive dogs don't misbehave because they're bad. They're under-stimulated — and every toy on the market gives up in the first 10 minutes.</p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="p-8 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
-            <div class="w-12 h-12 rounded-lg bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-6 text-xl">⏱️</div>
-            <h3 class="font-bold text-charcoal mb-3">The 5-minute flaw</h3>
-            <p class="text-charcoal-600 leading-relaxed">Treat puzzles, snuffle mats, and Kong-style toys expose every reward at once. Intelligent dogs crack the pattern or brute-force them in under 5 minutes — then stare at a silent house for the next 3 to 5 hours.</p>
-          </div>
-          <div class="p-8 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
-            <div class="w-12 h-12 rounded-lg bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-6 text-xl">🦴</div>
-            <h3 class="font-bold text-charcoal mb-3">Cheatable designs</h3>
-            <p class="text-charcoal-600 leading-relaxed">Lightweight dispensers flip upside down, migrate to the couch, or get knocked under furniture. Engagement ends prematurely — or becomes destructive chewing on slippers, doorframes, and cushions.</p>
-          </div>
-          <div class="p-8 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
-            <div class="w-12 h-12 rounded-lg bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-6 text-xl">😰</div>
-            <h3 class="font-bold text-charcoal mb-3">No calm off-ramp</h3>
-            <p class="text-charcoal-600 leading-relaxed">Electronic launchers and motorized gadgets break when chewed, scare noise-sensitive dogs, or spike adrenaline with zero wind-down — leaving dogs panting and anxious instead of tired and settled.</p>
-          </div>
-        </div>
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-charcoal-400 text-xs animate-bounce">
+        <span>Scroll</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
       </div>
     </section>
 
-    <!-- The Solution -->
-    <section class="py-24 px-6 bg-ice-cyan-50">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-16">
-          <span class="text-deep-teal font-semibold text-sm uppercase tracking-wider">The solution</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-charcoal mb-4">One SKU. Three modules. 3+ hours covered.</h2>
-          <p class="text-lg text-charcoal-600 max-w-2xl mx-auto">The TrailVault™ 3-Hour Alone System ships as a complete modular set — brain drain, physical tug, and calm wind-down — all for $69.</p>
+    <!-- ============ THE PROBLEM (4 cards) ============ -->
+    <section id="problem" class="py-24 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="max-w-2xl mb-14 reveal">
+          <span class="text-deep-teal font-semibold text-sm uppercase tracking-wider">The problem</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-charcoal mt-2 mb-4">High-drive dogs aren't bad. They're bored.</h2>
+          <p class="text-lg text-charcoal-600">Every toy on the shelf gives up in the first ten minutes — leaving your dog wired and the house silent for hours. Here's why.</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="group p-8 rounded-3xl bg-white border border-ice-cyan-200 hover:border-deep-teal/50 transition-all hover:-translate-y-2 hover:shadow-xl">
-            <img src="/images/3.png" alt="Puzzle Tower" class="w-24 h-24 mb-6 object-cover rounded-xl group-hover:scale-105 transition">
-            <h3 class="font-bold text-charcoal text-lg mb-2">01 · Puzzle Tower</h3>
-            <p class="text-charcoal-600 text-sm leading-relaxed">Hours 0:00–2:00 · Brain & nose drain. Weighted 4-stage mechanical lock-chain tower — one lock at a time.</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="problem-card p-7 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
+            <div class="w-12 h-12 rounded-xl bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-5 text-2xl">⏱️</div>
+            <h3 class="font-bold text-charcoal mb-2">The 5-minute flaw</h3>
+            <p class="text-charcoal-600 text-sm leading-relaxed">Treat puzzles expose every reward at once. Smart dogs crack the pattern or brute-force them in under 5 minutes.</p>
           </div>
-          <div class="group p-8 rounded-3xl bg-white border border-ice-cyan-200 hover:border-deep-teal/50 transition-all hover:-translate-y-2 hover:shadow-xl">
-            <img src="/images/6.webp" alt="ScentKnot" class="w-24 h-24 mb-6 object-cover rounded-xl group-hover:scale-105 transition">
-            <h3 class="font-bold text-charcoal text-lg mb-2">02 · ScentKnot Tug</h3>
-            <p class="text-charcoal-600 text-sm leading-relaxed">Hours 1:30–2:30 · Physical tug & resistance. Door-anchor tension cord with silicone treat pods — slippers stay safe.</p>
+          <div class="problem-card p-7 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
+            <div class="w-12 h-12 rounded-xl bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-5 text-2xl">🦴</div>
+            <h3 class="font-bold text-charcoal mb-2">Cheatable &amp; lightweight</h3>
+            <p class="text-charcoal-600 text-sm leading-relaxed">Dispensers flip over, get carried to the couch, or knocked under furniture — then it's slippers and doorframes.</p>
           </div>
-          <div class="group p-8 rounded-3xl bg-white border border-ice-cyan-200 hover:border-deep-teal/50 transition-all hover:-translate-y-2 hover:shadow-xl">
-            <img src="/images/9.webp" alt="Pawsle Freeze-Core" class="w-24 h-24 mb-6 object-cover rounded-xl group-hover:scale-105 transition">
-            <h3 class="font-bold text-charcoal text-lg mb-2">03 · Pawsle Freeze-Core</h3>
-            <p class="text-charcoal-600 text-sm leading-relaxed">Hours 2:30–3:30+ · Calm wind-down. Frozen broth-and-kibble rings with ribbed chew fins for slow, soothing licking.</p>
+          <div class="problem-card p-7 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
+            <div class="w-12 h-12 rounded-xl bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-5 text-2xl">⚡</div>
+            <h3 class="font-bold text-charcoal mb-2">No calm off-ramp</h3>
+            <p class="text-charcoal-600 text-sm leading-relaxed">Motorized gadgets spike adrenaline with zero wind-down — dogs end up panting and anxious, not settled.</p>
+          </div>
+          <div class="problem-card p-7 rounded-2xl border border-ice-cyan-100 bg-ice-cyan-50">
+            <div class="w-12 h-12 rounded-xl bg-deep-teal/10 flex items-center justify-center text-deep-teal mb-5 text-2xl">💸</div>
+            <h3 class="font-bold text-charcoal mb-2">$150–$250 fragile feeders</h3>
+            <p class="text-charcoal-600 text-sm leading-relaxed">Smart feeders need Wi-Fi, batteries and proprietary refills — and they can't go in the dishwasher.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Module Scroll Chapters -->
-    <section id="modules" class="py-32 px-6 bg-white">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-20">
-          <h2 class="text-3xl md:text-5xl font-bold text-charcoal mb-6">The 3-hour arc — told as you scroll</h2>
-          <p class="text-lg text-charcoal-600 max-w-xl mx-auto">Each module unlocks at the moment your dog needs it most. Scroll through the timeline of a dog alone.</p>
-        </div>
+    <!-- ============ 3-HOUR SCROLLYTELLING TIMELINE ============ -->
+    <section id="timeline" class="relative bg-ice-cyan-50">
+      <div class="timeline-wrap relative" style="height: 340vh">
+        <div class="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+          <div class="max-w-6xl mx-auto px-6 w-full">
+            <div class="text-center mb-8 md:mb-10">
+              <span class="text-deep-teal font-semibold text-sm uppercase tracking-wider">The star feature · a dog's 3 hours, told in scroll</span>
+              <h2 class="text-2xl md:text-4xl font-bold text-charcoal mt-2">One system covers the whole arc.</h2>
+            </div>
+            <div class="grid md:grid-cols-[140px_1fr] gap-8 md:gap-12 items-center">
+              <!-- Clock / progress rail -->
+              <div class="flex md:flex-col items-center justify-center gap-4 md:gap-6">
+                <div class="text-center">
+                  <div class="text-[10px] uppercase tracking-widest text-charcoal-400 mb-1">Time alone</div>
+                  <div id="clockDisplay" class="text-4xl md:text-5xl font-extrabold tabular-nums text-deep-teal leading-none">0:00</div>
+                </div>
+                <div class="relative h-2 md:h-[46vh] w-[46vw] md:w-[3px] bg-ice-cyan-200 rounded-full overflow-visible">
+                  <div class="absolute inset-0 bg-deep-teal/10 rounded-full"></div>
+                  <div id="clockNeedle" class="absolute md:left-1/2 md:-translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-aqua-500 ring-4 ring-aqua-500/20" style="top:0; left:0"></div>
+                </div>
+                <div id="clockPhase" class="hidden md:block text-xs font-medium text-charcoal-500 text-center">Brain &amp; nose drain</div>
+              </div>
 
-        <div class="relative">
-          <!-- Timeline line -->
-          <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-ice-cyan-200 hidden md:block"></div>
+              <!-- Module panels -->
+              <div class="relative h-[430px] md:h-[460px]">
+                <!-- Panel 1: Tower -->
+                <article class="timeline-panel absolute inset-0 flex flex-col md:flex-row items-center gap-6 md:gap-10" data-index="0">
+                  <div class="md:w-1/2 order-2 md:order-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-ice-cyan-200 text-deep-teal text-xs font-semibold mb-3">0:00 – 2:00 · Module 01</div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-charcoal mb-2">TrailVault™ Puzzle Tower</h3>
+                    <p class="text-deep-teal font-medium mb-3">Brain &amp; Nose Drain</p>
+                    <p class="text-charcoal-600 leading-relaxed mb-4 max-w-md">A weighted, 4-stage mechanical lock-chain tower — scent-track base paddles, counterweight spin drum, ratchet tug lever, top vault. One lock at a time, never brute-forced in 5 minutes.</p>
+                    <div class="flex flex-wrap gap-2 text-xs text-charcoal-500">
+                      <span class="px-3 py-1 rounded-full bg-white border border-ice-cyan-100">4 mechanical stages</span>
+                      <span class="px-3 py-1 rounded-full bg-white border border-ice-cyan-100">Weighted base</span>
+                    </div>
+                  </div>
+                  <div class="md:w-1/2 order-1 md:order-2 flex gap-3 w-full">
+                    <img src="/images/3.png" alt="TrailVault Puzzle Tower" class="w-1/2 h-52 md:h-72 object-cover rounded-2xl shadow-lg border border-white bg-white">
+                    <img src="/images/2.webp" alt="Dog solving the TrailVault Puzzle Tower" class="w-1/2 h-52 md:h-72 object-cover rounded-2xl shadow-lg border border-white">
+                  </div>
+                </article>
 
-          {#module1}
-          <div class="scroll-chapter md:flex md:items-center gap-16 mb-32 relative" data-module="tower">
-            <div class="md:w-1/2 relative z-10">
-              <div class="w-16 h-16 rounded-full bg-deep-teal text-white flex items-center justify-center font-bold text-xl shadow-lg mb-6">01</div>
-              <h3 class="text-2xl md:text-3xl font-bold text-charcoal mb-4">TrailVault™ Puzzle Tower</h3>
-              <p class="text-charcoal-600 text-lg leading-relaxed mb-6">Hours 0:00–2:00 · Brain & Nose Drain</p>
-              <p class="text-charcoal-600 leading-relaxed mb-8">A weighted 4-stage mechanical lock-chain tower forces smart dogs to solve one mechanical lock at a time — scent-track base paddles, counterweight spin drum, ratchet tug lever, and top vault. No brute-forcing in 5 minutes.</p>
-              <button onclick="addToCart('trailvault-system',1)" class="inline-flex items-center gap-2 text-deep-teal font-semibold hover:underline">Add to cart →</button>
-            </div>
-            <div class="md:w-1/2 relative z-10 scroll-img-wrapper">
-              <img src="/images/3.png" alt="Puzzle Tower" class="w-full rounded-2xl shadow-2xl border border-ice-cyan-100 scroll-img">
-            </div>
-          </div>
+                <!-- Panel 2: ScentKnot -->
+                <article class="timeline-panel absolute inset-0 flex flex-col md:flex-row items-center gap-6 md:gap-10 opacity-0" data-index="1">
+                  <div class="md:w-1/2 order-2 md:order-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-ice-cyan-200 text-deep-teal text-xs font-semibold mb-3">1:30 – 2:30 · Module 02</div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-charcoal mb-2">ScentKnot™ Door-Anchor Tension Cord</h3>
+                    <p class="text-deep-teal font-medium mb-3">Physical Tug &amp; Resistance</p>
+                    <p class="text-charcoal-600 leading-relaxed mb-4 max-w-md">Anchors safely under any closed interior door via its padded wedge. Tension-locking silicone treat pods give a full-body tug-and-pull outlet — slippers and cushions stay untouched.</p>
+                    <div class="flex flex-wrap gap-2 text-xs text-charcoal-500">
+                      <span class="px-3 py-1 rounded-full bg-white border border-ice-cyan-100">Padded door wedge</span>
+                      <span class="px-3 py-1 rounded-full bg-white border border-ice-cyan-100">3 treat pods</span>
+                    </div>
+                  </div>
+                  <div class="md:w-1/2 order-1 md:order-2 flex gap-3 w-full">
+                    <img src="/images/6.webp" alt="ScentKnot tension tug cord" class="w-1/2 h-52 md:h-72 object-cover rounded-2xl shadow-lg border border-white bg-white">
+                    <img src="/images/5.webp" alt="Dog tugging the ScentKnot under a door" class="w-1/2 h-52 md:h-72 object-cover rounded-2xl shadow-lg border border-white">
+                  </div>
+                </article>
 
-          <div class="scroll-chapter md:flex md:items-center md:flex-row-reverse gap-16 mb-32 relative" data-module="scentknot">
-            <div class="md:w-1/2 relative z-10 order-2 md:order-1 scroll-img-wrapper">
-              <img src="/images/6.webp" alt="ScentKnot Tug" class="w-full rounded-2xl shadow-2xl border border-ice-cyan-100 scroll-img">
-            </div>
-            <div class="md:w-1/2 relative z-10 order-1 md:order-2">
-              <div class="w-16 h-16 rounded-full bg-deep-teal text-white flex items-center justify-center font-bold text-xl shadow-lg mb-6">02</div>
-              <h3 class="text-2xl md:text-3xl font-bold text-charcoal mb-4">ScentKnot™ Door-Anchor Tension Cord</h3>
-              <p class="text-charcoal-600 text-lg leading-relaxed mb-6">Hours 1:30–2:30 · Physical Tug & Resistance</p>
-              <p class="text-charcoal-600 leading-relaxed mb-8">Clips to the TrailVault base or anchors safely under any closed interior door via its padded wedge. Tension-locking silicone treat pods give high-drive dogs a safe, full-body tug-and-pull outlet — so slippers and sofa cushions stay untouched.</p>
-              <button onclick="addToCart('trailvault-system',1)" class="inline-flex items-center gap-2 text-deep-teal font-semibold hover:underline">Add to cart →</button>
-            </div>
-          </div>
-
-          <div class="scroll-chapter md:flex md:items-center gap-16 mb-32 relative" data-module="pawsle">
-            <div class="md:w-1/2 relative z-10">
-              <div class="w-16 h-16 rounded-full bg-deep-teal text-white flex items-center justify-center font-bold text-xl shadow-lg mb-6">03</div>
-              <h3 class="text-2xl md:text-3xl font-bold text-charcoal mb-4">Pawsle™ Nesting Freeze-Core</h3>
-              <p class="text-charcoal-600 text-lg leading-relaxed mb-6">Hours 2:30–3:30+ · Calm Wind-Down</p>
-              <p class="text-charcoal-600 leading-relaxed mb-8">Docks into the TrailVault base — or sits beside it — with 3 concentric frozen broth-and-kibble rings and ribbed chew fins. Slow, endorphin-releasing licking transitions an exhausted dog into deep sleep before you walk back in.</p>
-              <button onclick="addToCart('trailvault-system',1)" class="inline-flex items-center gap-2 text-deep-teal font-semibold hover:underline">Add to cart →</button>
-            </div>
-            <div class="md:w-1/2 relative z-10 scroll-img-wrapper">
-              <img src="/images/9.webp" alt="Pawsle Freeze-Core" class="w-full rounded-2xl shadow-2xl border border-ice-cyan-100 scroll-img">
+                <!-- Panel 3: Pawsle -->
+                <article class="timeline-panel absolute inset-0 flex flex-col md:flex-row items-center gap-6 md:gap-10 opacity-0" data-index="2">
+                  <div class="md:w-1/2 order-2 md:order-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-ice-cyan-200 text-deep-teal text-xs font-semibold mb-3">2:30 – 3:30+ · Module 03</div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-charcoal mb-2">Pawsle™ Nesting Freeze-Core</h3>
+                    <p class="text-deep-teal font-medium mb-3">Calm Wind-Down</p>
+                    <p class="text-charcoal-600 leading-relaxed mb-4 max-w-md">Docks into the base or sits beside it. Three concentric frozen broth-and-kibble rings with ribbed chew fins trigger slow, endorphin-releasing licking that eases an exhausted dog into deep sleep.</p>
+                    <div class="flex flex-wrap gap-2 text-xs text-charcoal-500">
+                      <span class="px-3 py-1 rounded-full bg-white border border-ice-cyan-100">3 frozen rings</span>
+                      <span class="px-3 py-1 rounded-full bg-white border border-ice-cyan-100">Ribbed chew fins</span>
+                    </div>
+                  </div>
+                  <div class="md:w-1/2 order-1 md:order-2 flex gap-3 w-full">
+                    <img src="/images/9.webp" alt="Pawsle nesting freeze-core dish" class="w-1/2 h-52 md:h-72 object-cover rounded-2xl shadow-lg border border-white bg-white">
+                    <img src="/images/7.webp" alt="Dog calmly licking the Pawsle freeze-core" class="w-1/2 h-52 md:h-72 object-cover rounded-2xl shadow-lg border border-white">
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Why $69 / Unit Economics -->
-    <section id="pricing" class="py-24 px-6 bg-ice-cyan-50">
-      <div class="max-w-5xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 class="text-3xl md:text-4xl font-bold text-charcoal mb-6">Why $69? Direct-to-dog-owner pricing.</h2>
-            <p class="text-charcoal-600 text-lg mb-8 leading-relaxed">Smart app-connected feeders cost $150–$250, need Wi-Fi, batteries, and proprietary refills — and can't go in the dishwasher. TrailVault uses passive mechanical physics, food-grade polymers, and natural fibers. Zero circuit boards. Zero subscriptions.</p>
+    <!-- ============ INTERACTIVE CONFIGURATOR ============ -->
+    <section id="configure" class="py-24 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14 reveal">
+          <span class="text-deep-teal font-semibold text-sm uppercase tracking-wider">Build yours</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-charcoal mt-2">Configure your TrailVault</h2>
+          <p class="text-lg text-charcoal-600 mt-3">One SKU, tailored to your dog. Ships as a complete 3-piece system.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <!-- Preview -->
+          <div class="bg-ice-cyan-50 rounded-3xl p-8 border border-ice-cyan-100 sticky top-24">
+            <img id="configImage" src="/images/4.webp" alt="TrailVault System" class="w-full rounded-2xl shadow-lg mb-6 object-cover aspect-[4/3] bg-white">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-bold text-charcoal text-lg">TrailVault™ 3-Hour Alone System</h3>
+                <p id="configSummary" class="text-sm text-charcoal-500 mt-1">Medium · Cloud Teal</p>
+              </div>
+              <div class="text-right">
+                <div id="configPrice" class="text-2xl font-extrabold text-deep-teal">$69</div>
+                <div class="text-xs text-charcoal-400">one-time</div>
+              </div>
+            </div>
           </div>
-          <div class="bg-white rounded-3xl p-8 border border-ice-cyan-200 shadow-sm">
-            <table class="w-full text-left">
+
+          <!-- Options -->
+          <div class="space-y-8">
+            <!-- Dog size -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <label class="font-semibold text-charcoal">Dog Size</label>
+                <span class="text-xs text-charcoal-400">Sizing guide</span>
+              </div>
+              <div class="grid grid-cols-3 gap-3" data-group="size">
+                <button class="option-btn px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium hover:border-deep-teal/40 transition" data-value="Small" data-label="Small">Small<span class="block text-xs text-charcoal-400 font-normal">under 25 lb</span></button>
+                <button class="option-btn px-4 py-4 rounded-xl border-2 border-deep-teal bg-deep-teal/5 text-deep-teal font-medium transition" data-value="Medium" data-label="Medium">Medium<span class="block text-xs text-deep-teal/60 font-normal">25–60 lb</span></button>
+                <button class="option-btn px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium hover:border-deep-teal/40 transition" data-value="Large" data-label="Large">Large<span class="block text-xs text-charcoal-400 font-normal">60 lb+</span></button>
+              </div>
+            </div>
+
+            <!-- Color -->
+            <div>
+              <label class="font-semibold text-charcoal mb-3 block">Color</label>
+              <div class="grid grid-cols-2 gap-3" data-group="color">
+                <button class="option-btn flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-deep-teal bg-deep-teal/5 text-deep-teal font-medium transition" data-value="Cloud Teal" data-label="Cloud Teal">
+                  <span class="w-6 h-6 rounded-full bg-deep-teal border-2 border-white shadow"></span> Cloud Teal
+                </button>
+                <button class="option-btn flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white text-charcoal font-medium hover:border-deep-teal/40 transition" data-value="Warm Sand" data-label="Warm Sand">
+                  <span class="w-6 h-6 rounded-full bg-[#e8dcc8] border-2 border-white shadow"></span> Warm Sand
+                </button>
+              </div>
+            </div>
+
+            <!-- Refill pack -->
+            <div>
+              <label class="font-semibold text-charcoal mb-3 block">Add-ons</label>
+              <button id="refillToggle" class="w-full flex items-center justify-between px-4 py-4 rounded-xl border-2 border-ice-cyan-200 bg-white hover:border-deep-teal/40 transition text-left">
+                <span class="flex items-center gap-3">
+                  <span id="refillCheck" class="w-5 h-5 rounded-md border-2 border-ice-cyan-300 flex items-center justify-center text-white text-xs">✓</span>
+                  <span>
+                    <span class="font-medium text-charcoal">Refill Chew-Fin Pack</span>
+                    <span class="block text-xs text-charcoal-400">2 replacement ribbed fins</span>
+                  </span>
+                </span>
+                <span class="font-semibold text-charcoal">+$14</span>
+              </button>
+            </div>
+
+            <!-- Add to cart -->
+            <div class="pt-2">
+              <button id="configAddBtn" class="w-full py-4 bg-deep-teal text-white text-lg font-bold rounded-xl shadow-lg hover:bg-deep-teal/90 transition flex items-center justify-center gap-2">
+                Add to Cart — <span id="btnPrice">$69</span>
+              </button>
+              <p class="text-xs text-charcoal-400 text-center mt-3">Free shipping · Dishwasher-safe · No batteries or subscriptions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY $69 + FAQ ============ -->
+    <section id="why69" class="py-24 px-6 bg-ice-cyan-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-14 items-start">
+          <div class="reveal">
+            <span class="text-deep-teal font-semibold text-sm uppercase tracking-wider">Transparent pricing</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-charcoal mt-2 mb-5">Why $69?</h2>
+            <p class="text-charcoal-600 text-lg leading-relaxed mb-6">Smart app-connected feeders cost $150–$250, need Wi-Fi, batteries and proprietary refills — and can't go in the dishwasher. TrailVault uses passive mechanical physics, food-grade polymers and natural fibers. Zero circuit boards. Zero subscriptions.</p>
+            <div class="bg-white rounded-2xl p-6 border border-ice-cyan-200">
+              <div class="flex justify-between items-center mb-3 pb-3 border-b border-ice-cyan-100">
+                <span class="text-charcoal-500 text-sm">Landed cost per unit (batch of 1,000)</span>
+                <span class="font-bold text-charcoal">$15.80</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-charcoal-500 text-sm">Your price, shipped complete</span>
+                <span class="font-extrabold text-deep-teal text-xl">$69</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison table -->
+          <div class="bg-white rounded-3xl border border-ice-cyan-200 shadow-sm overflow-hidden">
+            <table class="w-full text-sm">
               <thead>
-                <tr class="border-b border-ice-cyan-100 text-charcoal-400 text-sm font-medium mb-4">
-                  <th class="pb-3">Component</th>
-                  <th class="pb-3 text-right">Unit Cost</th>
+                <tr class="bg-charcoal text-white">
+                  <th class="text-left px-5 py-4 font-semibold">Feature</th>
+                  <th class="px-3 py-4 font-semibold text-aqua-400">TrailVault</th>
+                  <th class="px-3 py-4 font-semibold text-white/70">Smart feeder</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr class="border-b border-ice-cyan-100 py-3">
-                  <td class="text-charcoal-600">TrailVault Tower (ABS shell, ratchet, drum, ballast)</td>
-                  <td class="text-charcoal text-right">$5.40</td>
-                </tr>
-                <tr class="border-b border-ice-cyan-100 py-3">
-                  <td class="text-charcoal-600">ScentKnot Tug Cord (rope, silicone pods, TPE wedge)</td>
-                  <td class="text-charcoal text-right">$3.10</td>
-                </tr>
-                <tr class="border-b border-ice-cyan-100 py-3">
-                  <td class="text-charcoal-600">Pawsle Freeze-Core (silicone rings, chew fins)</td>
-                  <td class="text-charcoal text-right">$3.30</td>
-                </tr>
-                <tr class="border-b border-ice-cyan-100 py-3">
-                  <td class="text-charcoal-600">Packaging & inserts</td>
-                  <td class="text-charcoal text-right">$1.45</td>
-                </tr>
-                <tr class="border-b border-ice-cyan-100 py-3">
-                  <td class="text-charcoal-600">Assembly, QC & freight</td>
-                  <td class="text-charcoal text-right">$2.55</td>
-                </tr>
-                <tr class="py-4 font-bold text-charcoal border-t-2 border-deep-teal">
-                  <td class="text-charcoal">Total landed COGS</td>
-                  <td class="text-charcoal text-right">$15.80</td>
-                </tr>
+              <tbody class="text-charcoal-600">
+                <tr class="border-b border-ice-cyan-100"><td class="px-5 py-4 font-medium text-charcoal">Price</td><td class="px-3 py-4 text-center font-bold text-deep-teal">$69 once</td><td class="px-3 py-4 text-center">$189+</td></tr>
+                <tr class="border-b border-ice-cyan-100"><td class="px-5 py-4 font-medium text-charcoal">Power</td><td class="px-3 py-4 text-center font-bold text-deep-teal">None · passive</td><td class="px-3 py-4 text-center">Wi-Fi + batteries</td></tr>
+                <tr class="border-b border-ice-cyan-100"><td class="px-5 py-4 font-medium text-charcoal">Dishwasher-safe</td><td class="px-3 py-4 text-center font-bold text-deep-teal">Yes</td><td class="px-3 py-4 text-center">No</td></tr>
+                <tr class="border-b border-ice-cyan-100"><td class="px-5 py-4 font-medium text-charcoal">Subscription</td><td class="px-3 py-4 text-center font-bold text-deep-teal">None</td><td class="px-3 py-4 text-center">Proprietary refills</td></tr>
+                <tr class="border-b border-ice-cyan-100"><td class="px-5 py-4 font-medium text-charcoal">Chew-proof</td><td class="px-3 py-4 text-center font-bold text-deep-teal">Passive mechanical</td><td class="px-3 py-4 text-center">Fragile electronics</td></tr>
+                <tr><td class="px-5 py-4 font-medium text-charcoal">Calm wind-down</td><td class="px-3 py-4 text-center font-bold text-deep-teal">Built-in</td><td class="px-3 py-4 text-center">None</td></tr>
               </tbody>
             </table>
-            <div class="mt-8 pt-6 border-t border-ice-cyan-100">
-              <div class="flex items-baseline gap-2 mb-2">
-                <span class="text-charcoal-400 text-sm">Retail price</span>
-                <span class="text-3xl font-bold text-charcoal">$69</span>
-              </div>
-              <p class="text-xs text-charcoal-500">Healthy DTC margins, no hidden subscriptions, dishwasher-safe, built to last.</p>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="max-w-3xl mx-auto mt-20">
+          <h2 class="text-2xl md:text-3xl font-bold text-charcoal text-center mb-10">Frequently asked questions</h2>
+          <div class="space-y-4">
+            <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden bg-white">
+              <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left font-semibold text-charcoal text-lg" onclick="toggleFaq(this)">
+                Is this safe for heavy chewers?
+                <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-7 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">Yes. All three modules use food-grade polymers and natural fibers — no circuit boards, batteries, or small electronics to break when chewed.</div>
+            </div>
+            <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden bg-white">
+              <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left font-semibold text-charcoal text-lg" onclick="toggleFaq(this)">
+                Does it need Wi-Fi or batteries?
+                <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-7 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">No. TrailVault is entirely passive mechanical enrichment. Nothing to charge, nothing to pair, nothing to break.</div>
+            </div>
+            <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden bg-white">
+              <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left font-semibold text-charcoal text-lg" onclick="toggleFaq(this)">
+                Can I wash it?
+                <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-7 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">Yes. All modules are dishwasher-safe — no proprietary refills, no Wi-Fi certifications, just rinse and reuse.</div>
+            </div>
+            <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden bg-white">
+              <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left font-semibold text-charcoal text-lg" onclick="toggleFaq(this)">
+                What if my dog is destructive?
+                <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-7 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">Start with the tower's lowest stage and always supervise the first sessions. The weighted base is designed to resist flipping, and the door wedge keeps the tug anchored instead of loose.</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- ============ CTA ============ -->
     <section class="py-24 px-6 bg-charcoal">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Come home to a tired dog.</h2>
-        <p class="text-aqua-200 text-lg mb-10 max-w-xl mx-auto">One system. Three modules. 3+ hours of calm. $69, shipped complete.</p>
-        <button onclick="openCart()" class="inline-flex items-center gap-2 px-10 py-5 bg-aqua-500 text-charcoal font-bold text-lg rounded-full shadow-xl hover:bg-aqua-400 transition transform hover:-translate-y-1">
-          Order TrailVault System
-        </button>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="py-24 px-6 bg-white">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold text-charcoal text-center mb-16">Frequently asked questions</h2>
-        <div class="space-y-4">
-          <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden">
-            <button class="w-full flex items-center justify-between px-8 py-5 text-left bg-charcoal/5 hover:bg-charcoal/10 transition text-charcoal font-semibold text-lg" onclick="toggleFaq(this)">
-              Is this safe for chewers?
-              <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="px-8 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">Yes. All three modules use food-grade polymers and natural fibers — no circuit boards, batteries, or small electronics to break when chewed.</div>
-          </div>
-          <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden">
-            <button class="w-full flex items-center justify-between px-8 py-5 text-left bg-charcoal/5 hover:bg-charcoal/10 transition text-charcoal font-semibold text-lg" onclick="toggleFaq(this)">
-              Does it need Wi-Fi or batteries?
-              <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="px-8 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">No. TrailVault is entirely passive mechanical enrichment. Nothing to charge, nothing to pair, nothing to break.</div>
-          </div>
-          <div class="border border-ice-cyan-200 rounded-2xl overflow-hidden">
-            <button class="w-full flex items-center justify-between px-8 py-5 text-left bg-charcoal/5 hover:bg-charcoal/10 transition text-charcoal font-semibold text-lg" onclick="toggleFaq(this)">
-              Can I wash it?
-              <div class="px-8 pb-5 text-charcoal-600 text-sm leading-relaxed border-t border-ice-cyan-100 hidden">Yes. All modules are dishwasher-safe — no proprietary refills, no Wi-Fi certifications, just rinse and reuse.</div>
-              <svg class="w-5 h-5 text-charcoal-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-          </div>
-        </div>
+        <p class="text-aqua-300 text-lg mb-10 max-w-xl mx-auto">One system. Three modules. 3+ hours of calm. $69, shipped complete.</p>
+        <a href="#configure" class="inline-flex items-center gap-2 px-10 py-5 bg-aqua-500 text-charcoal font-bold text-lg rounded-full shadow-xl hover:bg-aqua-400 transition transform hover:-translate-y-1">Shop the System</a>
       </div>
     </section>
 
@@ -274,26 +378,22 @@
 
   <!-- Cart Drawer -->
   <div id="cartDrawer" class="fixed inset-0 z-[60] hidden">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeCart()"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" data-close-cart></div>
     <div class="absolute right-0 top-0 bottom-0 w-full md:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-out" id="cartPanel">
       <div class="p-6 border-b border-ice-cyan-100 flex items-center justify-between">
         <h2 class="font-bold text-xl text-charcoal">Your Cart</h2>
-        <button onclick="closeCart()" class="text-charcoal-400 hover:text-charcoal">
+        <button data-close-cart class="text-charcoal-400 hover:text-charcoal">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
-      <div class="p-6 max-h-[60vh] overflow-y-auto" id="cartItems">
-        <!-- cart items injected here -->
-      </div>
+      <div class="p-6 max-h-[60vh] overflow-y-auto" id="cartItems"></div>
       <div class="p-6 border-t border-ice-cyan-100">
         <div class="flex justify-between mb-6">
           <span class="text-charcoal">Total</span>
           <span id="cartTotal" class="font-bold text-deep-teal">$0.00</span>
         </div>
-        <button id="checkoutBtn" class="w-full py-4 bg-deep-teal text-white font-semibold rounded-xl shadow-lg hover:bg-deep-teal/90 transition" onclick="goCheckout()">
-          Checkout →
-        </button>
-        <p class="text-xs text-charcoal-400 text-center mt-4">Secure checkout. Address captured at checkout.</p>
+        <button id="checkoutBtn" class="w-full py-4 bg-deep-teal text-white font-semibold rounded-xl shadow-lg hover:bg-deep-teal/90 transition" onclick="goCheckout()">Checkout →</button>
+        <p class="text-xs text-charcoal-400 text-center mt-4">Secure checkout · Address captured at checkout</p>
       </div>
     </div>
   </div>

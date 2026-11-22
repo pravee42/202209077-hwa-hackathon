@@ -1,62 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+html {
+  scroll-behavior: smooth;
+}
 
-@layer base {
-  :root {
-    --ice-cyan-50: #f0fdfa;
-    --ice-cyan-100: #ccfbf1;
-    --ice-cyan-200: #99f6e4;
-    --deep-teal: #0f766e;
-    --deep-teal-900: #115e59;
-    --aqua-500: #22d3ee;
-    --aqua-400: #67e8f9;
-    --charcoal: #1e293b;
-    --charcoal-600: #475569;
-    --charcoal-400: #94a3b8;
-  }
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+/* Timeline panels cross-fade */
+.timeline-panel {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: opacity, transform;
+}
 
-  body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  }
+#cartPanel {
+  will-change: transform;
+}
 
-  .bg-ice-cyan-50 { background-color: var(--ice-cyan-50); }
-  .border-ice-cyan-100 { border-color: var(--ice-cyan-100); }
-  .border-ice-cyan-200 { border-color: var(--ice-cyan-200); }
-  .text-charcoal { color: var(--charcoal); }
-  .text-charcoal-600 { color: var(--charcoal-600); }
-  .text-charcoal-400 { color: var(--charcoal-400); }
-  .text-deep-teal { color: var(--deep-teal); }
-  .bg-deep-teal { background-color: var(--deep-teal); }
-  .bg-aqua-500 { background-color: var(--aqua-500); }
-  .bg-aqua-400 { background-color: var(--aqua-400); }
-  .bg-charcoal { background-color: var(--charcoal); }
-  .text-aqua-200 { color: var(--aqua-400); }
-  .bg-ice-cyan-50 { background-color: var(--ice-cyan-50); }
+/* Prevent layout shift before GSAP runs */
+.reveal,
+.problem-card {
+  opacity: 1;
+}
 
-  .shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
-  .shadow-xl { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
-  .shadow-2xl { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
-  .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
-
-  .backdrop-blur-md { backdrop-filter: blur(12px); }
-  .bg-white\/80 { background-color: rgba(255, 255, 255, 0.8); }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out both;
-  }
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .scroll-img {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  #cartPanel {
-    will-change: transform;
-  }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .timeline-panel { transition: none; }
+  .animate-bounce { animation: none; }
+}
