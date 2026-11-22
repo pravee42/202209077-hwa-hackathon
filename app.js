@@ -114,12 +114,51 @@ const REFILL_PRICE = 1400;
 function money(cents) { return '$' + (cents / 100).toFixed(cents % 100 === 0 ? 0 : 2); }
 
 function setActiveOption(btn, group) {
-  document.querySelectorAll(`[data-group="${group}"] .option-btn`).forEach(b => {
+  const buttons = Array.from(document.querySelectorAll(`[data-group="${group}"] .option-btn`));
+  buttons.forEach(b => {
     b.classList.remove('border-deep-teal', 'bg-deep-teal/5', 'text-deep-teal');
     b.classList.add('border-ice-cyan-200', 'bg-white', 'text-charcoal');
   });
   btn.classList.remove('border-ice-cyan-200', 'bg-white', 'text-charcoal');
   btn.classList.add('border-deep-teal', 'bg-deep-teal/5', 'text-deep-teal');
+
+  const dotsWrap = document.querySelector(`[data-dots="${group}"]`);
+  if (dotsWrap) {
+    const idx = buttons.indexOf(btn);
+    dotsWrap.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('is-active', i === idx));
+  }
+}
+
+function initSliders() {
+  document.querySelectorAll('.slider-track').forEach(track => {
+    const group = track.getAttribute('data-group');
+    const cards = Array.from(track.querySelectorAll('.option-btn'));
+    const dotsWrap = document.querySelector(`[data-dots="${group}"]`);
+
+    if (dotsWrap) {
+      dotsWrap.innerHTML = cards.map((c, i) => `<button type="button" class="slider-dot" data-index="${i}" aria-label="Option ${i + 1}"></button>`).join('');
+      dotsWrap.querySelectorAll('.slider-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const i = Number(dot.dataset.index);
+          cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          cards[i].click();
+        });
+      });
+      const activeIdx = cards.findIndex(c => c.classList.contains('border-deep-teal'));
+      dotsWrap.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('is-active', i === activeIdx));
+    }
+
+    const step = (dir) => {
+      const first = cards[0];
+      if (!first) return;
+      const gap = 12;
+      const amount = first.offsetWidth + gap;
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    };
+
+    document.querySelectorAll(`[data-slider-prev="${group}"]`).forEach(b => b.addEventListener('click', () => step(-1)));
+    document.querySelectorAll(`[data-slider-next="${group}"]`).forEach(b => b.addEventListener('click', () => step(1)));
+  });
 }
 
 function updateConfigurator() {
@@ -306,6 +345,7 @@ function initVideo() {
 document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
   initConfigurator();
+  initSliders();
   initTimeline();
   initReveals();
   initVideo();

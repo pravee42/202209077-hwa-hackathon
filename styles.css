@@ -16,6 +16,43 @@ body {
   will-change: transform;
 }
 
+/* Configurator sliders */
+.slider-track {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.slider-track::-webkit-scrollbar {
+  display: none;
+}
+.slider-arrow {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  border: 1px solid #ccfbf1;
+  background: #ffffff;
+  color: #0f766e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.slider-arrow:hover {
+  background: #0f766e;
+  color: #ffffff;
+  border-color: #0f766e;
+}
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #ccfbf1;
+  transition: background 0.25s, width 0.25s;
+}
+.slider-dot.is-active {
+  width: 22px;
+  background: #0f766e;
+}
+
 /* Prevent layout shift before GSAP runs */
 .reveal,
 .problem-card {
